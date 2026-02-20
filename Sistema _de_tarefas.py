@@ -2,7 +2,7 @@ tarefas = []
 
 while True:
   print("lista de tarefas")
-  print("1 - ver taefas | 2 - nova tarefa | 3 - marcar como pronto | 4 - sair")
+  print("1 - ver tarefas | 2 - nova tarefa | 3 - marcar como pronto | 4 - sair")
 
   while True:
     menu = int(input("digite: "))
