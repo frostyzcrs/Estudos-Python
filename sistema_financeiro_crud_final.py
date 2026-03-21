@@ -70,16 +70,53 @@ def remover_transacao():
         except ValueError:
             print("Erro de digitação")
 
+def editar_transacao():
+    if not transacoes:
+        print("não há transações")
+    else:
+        for i, transacao in enumerate(transacoes):
+            print(f"{i} - {transacao['nome']} - {transacao['valor']} - {transacao['categoria']}")
+
+        transacao_editar = int(input("digite para editar: "))
+        encontrado = False
+        for i, transacao in enumerate(transacoes):
+            if transacao_editar == i:
+                encontrado = True
+                print(f"{transacao['nome']} | {transacao['valor']} | {transacao['categoria']}")
+                acao = int(input("o que deseja mudar | 1: nome . 2: valor . 3: categoria: "))
+                while True:
+                    if acao not in(1, 2 ,3):
+                        print("acao invalida")
+                    else:
+                        if acao == 1:
+                            novo_nome = input("digite o novo nome:")
+                            transacao['nome'] = novo_nome
+                        elif acao == 2:
+                            while True:
+                                novo_valor = int(input("digite o novo valor: "))
+                                if novo_valor >= 0:
+                                    break
+                                else:
+                                    print("valor invalido")
+                            transacao['valor'] = novo_valor
+                        elif acao == 3:
+                            nova_categoria = input("digite a nova categoria: ")
+                            transacao['categoria'] = nova_categoria
+                        break
+        if encontrado == False:
+            print("transação não encontrada")
+
 while True:
     print("1 - Cadastrar")
     print("2 - Ver saldo")
     print("3 - Relatorio por categoria")
     print("4 - Remover transação")
+    print("5 - Editar transação")
 
     while True:
         try:
             menu = int(input("Digite: "))
-            if menu in(1, 2, 3, 4):
+            if menu in(1, 2, 3, 4, 5):
                 break
             else:
                 print("Ação invalida")
@@ -94,3 +131,5 @@ while True:
         relatorio_por_categoria()
     elif menu == 4:
         remover_transacao()
+    elif menu == 5:
+        editar_transacao()
