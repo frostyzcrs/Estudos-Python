@@ -106,17 +106,43 @@ def editar_transacao():
         if encontrado == False:
             print("transação não encontrada")
 
+def salvar_dados():
+    with open("banco_financeiro.txt", "w") as arquivo:
+        for t in transacoes:
+            linha = f"{t['nome']};{t['valor']};{t['categoria']}\n"
+            arquivo.write(linha)
+        print("Dados salvos com sucesso")
+
+def carregar_dados():
+    try:
+        with open("banco_financeiro.txt", "r") as arquivo:
+            for linha in arquivo:
+                partes = linha.strip().split(";")
+                if len(partes) == 3:
+                    nome, valor, categoria = partes
+                    dicionario = {
+                        "nome": nome,
+                        "valor": int(valor),
+                        "categoria": categoria
+                    }
+                    transacoes.append(dicionario)
+            print("Dados carregados da memória")
+    except FileNotFoundError:
+        print("Arquivo não encontrado")
+
+carregar_dados()
 while True:
     print("1 - Cadastrar")
     print("2 - Ver saldo")
     print("3 - Relatorio por categoria")
     print("4 - Remover transação")
     print("5 - Editar transação")
+    print("6 - Sair")
 
     while True:
         try:
             menu = int(input("Digite: "))
-            if menu in(1, 2, 3, 4, 5):
+            if menu in(1, 2, 3, 4, 5, 6):
                 break
             else:
                 print("Ação invalida")
@@ -133,3 +159,7 @@ while True:
         remover_transacao()
     elif menu == 5:
         editar_transacao()
+    elif menu == 6:
+        salvar_dados()
+        print("Programa Finalizado")
+        break
